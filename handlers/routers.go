@@ -45,6 +45,8 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
 	data, _ := adapters.FindFileGlobal("files", mux.Vars(r)["id"])
+
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	if data == nil {
 		w.WriteHeader(404)
 	} else {
