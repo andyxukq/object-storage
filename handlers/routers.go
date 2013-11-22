@@ -70,7 +70,7 @@ func Start(port string) {
 			r := mux.NewRouter()
 
 			r.HandleFunc("/", PostHandler).Methods("POST")
-			r.HandleFunc("/", KnockHandler).Methods("GET")
+			r.HandleFunc("/", KnockHandler).Methods("GET", "OPTIONS")
 			r.HandleFunc("/{id:[0-9a-z]+}", GetHandler).Methods("GET")
 
 			http.Handle("/", r)

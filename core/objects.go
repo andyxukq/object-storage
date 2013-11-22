@@ -21,6 +21,7 @@ func (self *Response) Set(code int, msg string) {
 func (self *Response) Write(w http.ResponseWriter) error {
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+
 	w.WriteHeader(self.Code)
 
 	body, err := json.Marshal(self)
