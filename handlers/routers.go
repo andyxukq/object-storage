@@ -16,6 +16,8 @@ import (
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 	res := Response{}
 
+	log.Println("Request received")
+
 	err := r.ParseMultipartForm(104857600)
 	if err != nil {
 		res.Set(http.StatusBadRequest, "Bad Format: "+err.Error())

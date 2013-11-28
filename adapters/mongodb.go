@@ -12,6 +12,12 @@ import (
 )
 
 var DbSession *mgo.Session
+var MONGO_HOST string
+
+func SetConfig(mongo_host string) {
+	MONGO_HOST = mongo_host
+	log.Println("Set to connect to MongoDB at", MONGO_HOST)
+}
 
 func GetSession() *mgo.Session {
 	if DbSession == nil {
@@ -24,7 +30,7 @@ func GetSession() *mgo.Session {
 func ConnectToDB() *mgo.Session {
 	var err error
 
-	DbSession, err = mgo.Dial("localhost")
+	DbSession, err = mgo.Dial(MONGO_HOST)
 	if err != nil {
 		panic(err)
 	}
