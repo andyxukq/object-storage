@@ -4,10 +4,10 @@ import (
 	"log"
 	"runtime"
 
-	config "tools/config-parser"
-	"tools/version"
 	"file-storage-system/adapters"
 	"file-storage-system/handlers"
+	config "tools/config-parser"
+	"tools/version"
 )
 
 func main() {
