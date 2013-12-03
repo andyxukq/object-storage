@@ -1,15 +1,11 @@
 package handlers
 
 import (
-	//"bytes"
-	//"fmt"
-	//"image/jpeg"
 	"log"
 	"net/http"
-	//"time"
 
-	"file-storage/adapters"
-	. "file-storage/core"
+	"file-storage-system/adapters"
+	. "file-storage-system/core"
 	"github.com/gorilla/mux"
 )
 

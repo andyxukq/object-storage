@@ -4,14 +4,16 @@ import (
 	"log"
 	"runtime"
 
-	config "config-parser"
-	"file-storage/adapters"
-	"file-storage/handlers"
+	config "tools/config-parser"
+	"tools/version"
+	"file-storage-system/adapters"
+	"file-storage-system/handlers"
 )
 
 func main() {
 	log.Println("====== STARTING TiUP FILE STORAGE SERVICE ======")
 
+	version.Init()
 	cfg, err := config.ParseConfig()
 	if err != nil {
 		panic(err)
