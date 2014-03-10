@@ -45,7 +45,7 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 	data, _ := adapters.FindFileGlobal("files", mux.Vars(r)["id"])
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    if name := r.Url.Query().Get("name"); name!=""{
+    if name := r.URL.Query().Get("name"); name!=""{
 	    w.Header().Set("Content-disposition", "attachment;filename=" + name)
     } 
 
