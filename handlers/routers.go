@@ -45,9 +45,12 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 	data, _ := adapters.FindFileGlobal("files", mux.Vars(r)["id"])
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-    if name := r.URL.Query().Get("name"); name!=""{
-	    w.Header().Set("Content-disposition", "attachment;filename=" + name)
-    } 
+	if name := r.URL.Query().Get("name"); name!=""{
+		w.Header().Set("Content-disposition", "attachment;filename=" + name)
+	}
+	if r.URL.Query().Get("type") == "video"{
+		w.Header().Set("Content-Type", "video/mp4")
+	} 
 
 	if data == nil {
 		w.WriteHeader(404)
