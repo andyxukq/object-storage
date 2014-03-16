@@ -67,11 +67,10 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
     w.Header().Set("Accept-Ranges", "bytes")
 
-	if name := r.URL.Query().Get("name"); name!=""{
-		w.Header().Set("Content-disposition", "attachment;filename=" + name)
-	}
 	if r.URL.Query().Get("type") == "video"{
 		w.Header().Set("Content-Type", "video/mp4")
+	} else if name := r.URL.Query().Get("name"); name!=""{
+		w.Header().Set("Content-disposition", "attachment;filename=" + name)
 	}
 
 	if data == nil {
