@@ -3,6 +3,9 @@ package handlers
 import (
 	"log"
 	"net/http"
+    "strings"
+    "strconv"
+    "fmt"
 
 	"file-storage-system/adapters"
 	. "file-storage-system/core"
@@ -43,21 +46,43 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
 	data, _ := adapters.FindFileGlobal("files", mux.Vars(r)["id"])
+    if rstr := r.Header.Get("Range"); rstr!=""{
+        var start, end int;
+        size := len(data)
+        ra := strings.Split(strings.Split(rstr, "=")[1], "-")
+        if ra[0]!="" {
+            start, _ = strconv.Atoi(ra[0])
+        } else {
+            start = 0
+        }
+        if ra[1]!="" {
+            end, _ = strconv.Atoi(ra[1])
+        } else {
+            end = size-1
+        }
+        data = data[start:end+1]
+        w.Header().Set("Content-Range", fmt.Sprintf("bytes %v-%v/%v", start, end, size))
+    }
 
 	w.Header().Set("Access-Control-Allow-Origin", "*")
+    w.Header().Set("Accept-Ranges", "bytes")
+
 	if name := r.URL.Query().Get("name"); name!=""{
 		w.Header().Set("Content-disposition", "attachment;filename=" + name)
 	}
 	if r.URL.Query().Get("type") == "video"{
 		w.Header().Set("Content-Type", "video/mp4")
-	} 
+	}
 
 	if data == nil {
 		w.WriteHeader(404)
+	} else if r.Header.Get("Range") != "" {
+		w.WriteHeader(206)
+		w.Write(data)
 	} else {
 		w.WriteHeader(200)
 		w.Write(data)
-	}
+    }
 }
 
 func KnockHandler(w http.ResponseWriter, r *http.Request) {
