@@ -17,6 +17,7 @@ var MONGO_HOST string
 func SetConfig(mongo_host string) {
 	MONGO_HOST = mongo_host
 	log.Println("Set to connect to MongoDB at", MONGO_HOST)
+	Init()
 }
 
 func GetSession() *mgo.Session {
@@ -41,7 +42,7 @@ func ConnectToDB() *mgo.Session {
 	return DbSession
 }
 
-func init() {
+func Init() {
 	ConnectToDB()
 	SetupAdapterLocator()
 }
